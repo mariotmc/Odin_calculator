@@ -18,7 +18,11 @@
     <!-- Fonts -->
     <!-- <link href="https://fonts.google.com/" rel="stylesheet" /> -->
     <!-- Favicon -->
-    <link rel="shortcut icon" href="" type="image/x-icon" />
+    <link
+      rel="shortcut icon"
+      href="https://www.theodinproject.com/favicon-32x32.png"
+      type="image/x-icon"
+    />
     <!-- JS Script -->
     <script src="./app/js/script.js" defer></script>
   </head>
@@ -26,7 +30,7 @@
     <div class="container">
       <div class="calculator">
         <div id="display">0</div>
-        <button class="digit" id="nine" value="9">9</button>
+        <button class="digit" id="nine" value="9" data-key="57">9</button>
         <button class="digit" id="eight" value="8">8</button>
         <button class="digit" id="seven" value="7">7</button>
         <button class="digit" id="six" value="6">6</button>
@@ -43,6 +47,7 @@
         <button class="operation" id="multiply">x</button>
         <button class="operation" id="divide">/</button>
         <button id="equals">=</button>
+        <button id="backspace">AC</button>
         <button id="clear">C</button>
       </div>
     </div>
