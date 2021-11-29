@@ -10,6 +10,7 @@
 html {
   font-size: 100%;
   box-sizing: border-box;
+  height: 100%;
 }
 
 *,
@@ -21,6 +22,9 @@ html {
 body {
   margin: 0;
   padding: 0;
+  background-color: #83bbff;
+  height: 100%;
+  font-family: monospace;
 }
 
 h1,
@@ -34,4 +38,64 @@ a,
 a:visited,
 a:active {
   text-decoration: none;
+}
+
+.container {
+  display: flex;
+  height: 100%;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.calculator {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 0.125rem;
+  width: 28.125rem;
+  height: auto;
+  background-color: #293241;
+  border: 0.625rem solid #293241;
+  border-radius: 0.3125rem;
+}
+
+#display {
+  grid-column: 1/-1;
+  text-align: right;
+  align-items: flex-end;
+  background-color: #293241;
+  color: white;
+  border: 0.1875rem solid #efefef;
+  margin-bottom: 0.3125rem;
+  padding-right: 0.625rem;
+  font-size: 4.375rem;
+}
+
+#zero {
+  grid-column: -5/-3;
+}
+
+button {
+  border: 0.0625rem solid black;
+  border-radius: 0.25rem;
+  font-family: monospace;
+  padding: 0;
+  font-size: 1.875rem;
+}
+button:hover {
+  cursor: pointer;
+}
+
+.operation,
+#equals {
+  background-color: #b95d00;
+  color: #e8e6e3;
+}
+
+#clear,
+#backspace,
+#prefix {
+  background-color: #343b6b;
+  color: #e8e6e3;
 }/*# sourceMappingURL=style.css.map */

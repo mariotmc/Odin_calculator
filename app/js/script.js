@@ -19,8 +19,12 @@ const equals = document.querySelector("#equals");
 const clear = document.querySelector("#clear");
 const backspace = document.querySelector("#backspace");
 const digits = document.querySelectorAll(".digit");
+const miscButtons = document.querySelectorAll(".miscButtons");
+const darkButtons = document.querySelectorAll(".darkOnClick");
 
 function add(firstNumber, secondNumber) {
+  firstNumber = parseFloat(firstNumber);
+  secondNumber = parseFloat(secondNumber);
   if ((firstNumber + secondNumber) % 1 !== 0) {
     return parseFloat((firstNumber + secondNumber).toFixed(5));
   } else {
@@ -29,6 +33,8 @@ function add(firstNumber, secondNumber) {
 }
 
 function subtract(firstNumber, secondNumber) {
+  firstNumber = parseFloat(firstNumber);
+  secondNumber = parseFloat(secondNumber);
   if ((firstNumber - secondNumber) % 1 !== 0) {
     return parseFloat((firstNumber - secondNumber).toFixed(5));
   } else {
@@ -37,6 +43,8 @@ function subtract(firstNumber, secondNumber) {
 }
 
 function multiply(firstNumber, secondNumber) {
+  firstNumber = parseFloat(firstNumber);
+  secondNumber = parseFloat(secondNumber);
   if ((firstNumber * secondNumber) % 1 !== 0) {
     return parseFloat((firstNumber * secondNumber).toFixed(5));
   } else {
@@ -45,6 +53,8 @@ function multiply(firstNumber, secondNumber) {
 }
 
 function divide(firstNumber, secondNumber) {
+  firstNumber = parseFloat(firstNumber);
+  secondNumber = parseFloat(secondNumber);
   if ((firstNumber / secondNumber) % 1 !== 0) {
     return parseFloat((firstNumber / secondNumber).toFixed(5));
   } else {
@@ -53,7 +63,18 @@ function divide(firstNumber, secondNumber) {
 }
 
 function operate(operation, firstNumber, secondNumber) {
-  return operation(firstNumber, secondNumber);
+  firstNumber = parseFloat(firstNumber);
+  secondNumber = parseFloat(secondNumber);
+
+  if (operation == add) {
+    return add(firstNumber, secondNumber);
+  } else if (operation == subtract) {
+    return subtract(firstNumber, secondNumber);
+  } else if (operation == multiply) {
+    return multiply(firstNumber, secondNumber);
+  } else if (operation == divide) {
+    return divide(firstNumber, secondNumber);
+  }
 }
 
 function calculateResult(operation) {
@@ -96,11 +117,10 @@ digits.forEach((element) => {
     if (parseFloat(num).toString().length < 10) {
       if (mode === "num") {
         if (num === null) {
-          num = parseFloat(e.target.value);
+          num = e.target.value;
           display.textContent = num;
         } else if (num !== null) {
           num += e.target.value;
-          num = parseFloat(num);
           display.textContent = num;
         }
       }
@@ -109,11 +129,10 @@ digits.forEach((element) => {
     if (parseFloat(num2).toString().length < 10) {
       if (mode === "num2") {
         if (num2 === null) {
-          num2 = parseFloat(e.target.value);
+          num2 = e.target.value;
           display.textContent = num2;
         } else if (num2 !== null) {
           num2 += e.target.value;
-          num2 = parseFloat(num2);
           display.textContent = num2;
         }
       }
@@ -123,43 +142,7 @@ digits.forEach((element) => {
   });
 });
 
-// digits.forEach((element) => {
-//   element.addEventListener("keyup", (e) => {
-//     console.log("success");
-//     if (parseFloat(num).toString().length < 10) {
-//       if (mode === "num") {
-//         if (num === null) {
-//           console.log("success2");
-//           num = parseFloat(e.target.key.value);
-//           display.textContent = num;
-//         } else if (num !== null) {
-//           console.log("success3");
-//           num += e.target.value;
-//           num = parseFloat(num);
-//           display.textContent = num;
-//         }
-//       }
-//     }
-
-//     if (parseFloat(num2).toString().length < 10) {
-//       if (mode === "num2") {
-//         if (num2 === null) {
-//           num2 = parseFloat(e.target.key.value);
-//           display.textContent = num2;
-//         } else if (num2 !== null) {
-//           num2 += e.target.value;
-//           num2 = parseFloat(num2);
-//           display.textContent = num2;
-//         }
-//       }
-//     } else {
-//       return;
-//     }
-//   });
-// });
-
 document.addEventListener("keydown", (e) => {
-  e.preventDefault();
   if (e.key === "9") {
     nine.click();
   } else if (e.key === "8") {
@@ -200,6 +183,11 @@ document.addEventListener("keydown", (e) => {
 });
 
 addButton.addEventListener("click", () => {
+  operationActive(addButton);
+  operationInactive(subtractButton);
+  operationInactive(multiplyButton);
+  operationInactive(divideButton);
+
   if (operationMode === "null") {
     operator = add;
     operationMode = "notNull";
@@ -210,6 +198,11 @@ addButton.addEventListener("click", () => {
 });
 
 subtractButton.addEventListener("click", () => {
+  operationActive(subtractButton);
+  operationInactive(addButton);
+  operationInactive(multiplyButton);
+  operationInactive(divideButton);
+
   if (operationMode === "null") {
     operator = subtract;
     operationMode = "notNull";
@@ -220,6 +213,11 @@ subtractButton.addEventListener("click", () => {
 });
 
 multiplyButton.addEventListener("click", () => {
+  operationActive(multiplyButton);
+  operationInactive(addButton);
+  operationInactive(subtractButton);
+  operationInactive(divideButton);
+
   if (operationMode === "null") {
     operator = multiply;
     operationMode = "notNull";
@@ -230,6 +228,11 @@ multiplyButton.addEventListener("click", () => {
 });
 
 divideButton.addEventListener("click", () => {
+  operationActive(divideButton);
+  operationInactive(addButton);
+  operationInactive(subtractButton);
+  operationInactive(multiplyButton);
+
   if (operationMode === "null") {
     operator = divide;
     operationMode = "notNull";
@@ -240,14 +243,14 @@ divideButton.addEventListener("click", () => {
 });
 
 decimalButton.addEventListener("click", () => {
-  if (display.textContent == num) {
+  if (mode === "num") {
     if (!num.toString().includes(".") && num.toString().length < 10) {
       num += ".";
       display.textContent = num;
     } else {
       return;
     }
-  } else if (display.textContent == num2) {
+  } else if (mode === "num2") {
     if (!num2.toString().includes(".") && num2.toString().length < 10) {
       num2 += ".";
       display.textContent = num2;
@@ -280,10 +283,16 @@ prefixButton.addEventListener("click", () => {
 equals.addEventListener("click", () => {
   calculateResult();
   operator = null;
+  operationMode = "null";
+  operationInactive(addButton);
+  operationInactive(subtractButton);
+  operationInactive(multiplyButton);
+  operationInactive(divideButton);
 });
 
+// MARKER
 backspace.addEventListener("click", () => {
-  if (display.textContent == num) {
+  if (mode === "num") {
     if (num.toString().length > 1) {
       num = num.toString().slice(0, -1);
       num = parseFloat(num);
@@ -292,7 +301,7 @@ backspace.addEventListener("click", () => {
       display.textContent = 0;
       num = null;
     }
-  } else if (display.textContent == num2) {
+  } else if (mode === "num2") {
     if (num2.toString().length > 1) {
       num2 = num2.toString().slice(0, -1);
       num2 = parseFloat(num2);
@@ -313,5 +322,38 @@ clear.addEventListener("click", () => {
   mode = "num";
 });
 
-// Bug: expected: 5 + 5.5 => received: 5 + 55
-// On num2 the decimal disappears, this only happens when num === single char && 1st char of num2 is === 1st char of num
+zero.addEventListener("click", () => {
+  if (num.toString().length <= 10 && num.toString().includes(".")) {
+    zero.value = "0";
+  } else if (num[0] == "0") {
+    zero.value = "";
+  }
+});
+
+function operationActive(target) {
+  target.style.filter = "brightness(150%)";
+}
+
+function operationInactive(target) {
+  target.style.filter = "";
+}
+
+miscButtons.forEach((element) => {
+  element.addEventListener("click", (e) => {
+    e.target.style.filter = "brightness(150%)";
+    setTimeout(() => {
+      e.target.style.filter = "";
+    }, 100);
+  });
+});
+
+darkButtons.forEach((element) => {
+  element.addEventListener("click", (e) => {
+    e.target.style.filter = "brightness(80%)";
+    setTimeout(() => {
+      e.target.style.filter = "";
+    }, 100);
+  });
+});
+
+// Bug: When deleting single char, if only 0s left it will delete all instead of one-by-one

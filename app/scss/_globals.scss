@@ -4,6 +4,7 @@
 html {
   font-size: 100%;
   box-sizing: border-box;
+  height: 100%;
 }
 
 *,
@@ -15,6 +16,9 @@ html {
 body {
   margin: 0;
   padding: 0;
+  background-color: #83bbff;
+  height: 100%;
+  font-family: monospace;
 }
 
 h1,
@@ -28,4 +32,65 @@ a,
 a:visited,
 a:active {
   text-decoration: none;
+}
+
+.container {
+  display: flex;
+  height: 100%;
+  margin: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.calculator {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: rem(2);
+  width: rem(450);
+  height: auto;
+  background-color: #293241;
+  border: rem(10) solid #293241;
+  border-radius: rem(5);
+}
+
+#display {
+  grid-column: 1 / -1;
+  text-align: right;
+  align-items: flex-end;
+  background-color: #293241;
+  color: white;
+  border: rem(3) solid #efefef;
+  margin-bottom: rem(5);
+  padding-right: rem(10);
+  font-size: rem(70);
+}
+
+#zero {
+  grid-column: -5 / -3;
+}
+
+button {
+  border: rem(1) solid black;
+  border-radius: rem(4);
+  font-family: monospace;
+  padding: 0;
+  font-size: rem(30);
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.operation,
+#equals {
+  background-color: #b95d00;
+  color: #e8e6e3;
+}
+
+#clear,
+#backspace,
+#prefix {
+  background-color: #343b6b;
+  color: #e8e6e3;
 }
